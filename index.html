@@ -1,4 +1,4 @@
->
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -64,6 +64,17 @@
         .modal-content {
             transition: transform 0.25s ease;
         }
+        /* New styles for better layout and text wrapping */
+        .table-container, .overflow-x-auto {
+            overflow-x: visible;
+        }
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        td, th {
+            overflow-wrap: break-word;
+        }
     </style>
 </head>
 <body>
@@ -85,7 +96,8 @@
     <!-- Contenido principal de la app (inicialmente oculto) -->
     <div id="app-container" class="hidden">
         <div id="notification-area" class="fixed top-5 right-5 z-[100] w-full max-w-sm"></div>
-        <div class="container mx-auto p-4 md:p-8">
+        <!-- Widened container for more space -->
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl">
             <!-- Encabezado -->
             <header class="bg-white p-6 rounded-xl shadow-md mb-8">
                 <div class="flex flex-col md:flex-row justify-between items-start">
@@ -155,7 +167,7 @@
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="ingresos">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Total</th></tr></thead><tbody id="ingresos-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-3/5">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5">Valor Total</th></tr></thead><tbody id="ingresos-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="ingresos-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                         <div id="deducciones" class="tab-pane hidden">
@@ -166,7 +178,7 @@
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="deducciones">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Total</th></tr></thead><tbody id="deducciones-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-3/5">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-2/5">Valor Total</th></tr></thead><tbody id="deducciones-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="deducciones-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                         <div id="patrimonio" class="tab-pane hidden">
@@ -177,7 +189,7 @@
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="patrimonio">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="tipo">Tipo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="descripcion">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Fiscal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="patrimonio-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="tipo">Tipo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="descripcion">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Fiscal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="patrimonio-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="patrimonio-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                         <div id="retenciones" class="tab-pane hidden">
@@ -188,11 +200,11 @@
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="retenciones">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="tercero">Tercero<span class="sort-icon"></span></th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="concepto">Concepto<span class="sort-icon"></span></th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="retenciones-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="tercero">Tercero<span class="sort-icon"></span></th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="concepto">Concepto<span class="sort-icon"></span></th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="retenciones-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="retenciones-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                          <div id="archivos" class="tab-pane hidden">
-                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre de Archivo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Carga</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th></tr></thead><tbody id="archivos-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre de Archivo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Carga</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th></tr></thead><tbody id="archivos-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                         </div>
                     </div>
                 </div>
@@ -304,6 +316,7 @@
         let sortState = {};
         let isInitialLoad = true;
         let latestFileName = null; 
+        let expandedGroupIds = new Set(); // Stores the IDs of expanded groups
 
         const categorias = {
             ingresos: ['Renta Laboral', 'Honorarios', 'Renta de Capital', 'Renta no Laboral', 'No Constitutivo', 'Otro'],
@@ -502,6 +515,9 @@
                      body.addEventListener('click', e => {
                         const header = e.target.closest('.group-header');
                         if (!header) return;
+
+                        const groupId = header.dataset.groupId;
+
                         const statusButton = e.target.closest('.status-group-btn');
                         if (statusButton) {
                             e.stopPropagation();
@@ -512,10 +528,18 @@
                             updateGroupStatus(type, concepto, fuente, newStatus);
                             return;
                         }
-                        const groupId = header.dataset.groupId;
+                        
                         const container = document.querySelector(`.detail-container[data-group-id="${groupId}"]`);
                         const arrow = header.querySelector('.group-arrow');
-                        if (container) container.classList.toggle('hidden');
+
+                        if (container) {
+                            if (container.classList.contains('hidden')) {
+                                expandedGroupIds.add(groupId);
+                            } else {
+                                expandedGroupIds.delete(groupId);
+                            }
+                            container.classList.toggle('hidden');
+                        }
                         if (arrow) arrow.classList.toggle('rotate-90');
                     });
                     body.addEventListener('change', e => {
@@ -769,6 +793,7 @@
             fichaContribuyente = { nombre: null, nit: null, documentos: [], ingresos: [], deducciones: [], patrimonio: [], retenciones: [] };
             sortState = {};
             isInitialLoad = true;
+            expandedGroupIds.clear();
             populateAllTables();
             updateSortIcons();
             document.querySelectorAll('.filter-input').forEach(input => input.value = '');
@@ -1488,9 +1513,9 @@
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${doc.file.name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${doc.uploadedAt.toLocaleString('es-CO')}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm"><button class="delete-file-btn text-red-500 hover:text-red-700 font-medium" data-filename="${doc.file.name}">Eliminar</button></td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${doc.file.name}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${doc.uploadedAt.toLocaleString('es-CO')}</td>
+                    <td class="px-6 py-4 text-sm"><button class="delete-file-btn text-red-500 hover:text-red-700 font-medium" data-filename="${doc.file.name}">Eliminar</button></td>
                 `;
                 tbody.appendChild(row);
             });
@@ -1585,22 +1610,28 @@
                         const newItemIndicator = isItemNew ? '<span class="inline-block w-2 h-2 mr-2 bg-blue-500 rounded-full"></span>' : '';
                         if (type === 'ingresos') {
                             cellsHTML = `
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t">${newItemIndicator}${item.tercero || ''}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t">${createCategorySelector(type, item.categoria)}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t">${createStatusSelector(item.estado)}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>`;
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${newItemIndicator}${item.tercero || ''}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${createCategorySelector(type, item.categoria)}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${createStatusSelector(item.estado)}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>`;
                         } else {
                             cellsHTML = `
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t">${newItemIndicator}${item.tercero || ''}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t">${createCategorySelector(type, item.categoria)}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t">${createStatusSelector(item.estado)}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500 border-t text-right font-mono">${item.base ? formatCurrency(item.base) : ''}</td>
-                                <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>`;
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${newItemIndicator}${item.tercero || ''}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${createCategorySelector(type, item.categoria)}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${createStatusSelector(item.estado)}</td>
+                                <td class="px-6 py-3 text-sm text-gray-500 border-t text-right font-mono">${item.base ? formatCurrency(item.base) : ''}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>`;
                         }
                         row.innerHTML = cellsHTML;
                         addSelectListeners(row, item);
                     });
                     detailCell.appendChild(subTable);
+
+                    if (expandedGroupIds.has(groupId)) {
+                        detailContainerRow.classList.remove('hidden');
+                        const arrow = groupHeaderRow.querySelector('.group-arrow');
+                        if (arrow) arrow.classList.add('rotate-90');
+                    }
                 });
             } else {
                  data.forEach(item => {
@@ -1611,7 +1642,7 @@
                     const newIndicator = isNew ? '<span class="inline-block w-2 h-2 mr-2 bg-blue-500 rounded-full"></span>' : '';
                     columns.forEach((col, index) => {
                         let content = item[col];
-                        let cellClass = 'px-6 py-4 whitespace-nowrap text-sm text-gray-700';
+                        let cellClass = 'px-6 py-4 text-sm text-gray-700';
                         let finalContent = '';
                         if (col === 'valor' || col === 'valorfiscal') {
                             finalContent = formatCurrency(content);
@@ -1625,14 +1656,13 @@
                             finalContent = createStatusSelector(content);
                         } else if (col === 'fuente') {
                             finalContent = content || '';
-                            cellClass = 'px-6 py-4 whitespace-nowrap text-xs text-gray-500';
+                            cellClass = 'px-6 py-4 text-xs text-gray-500';
                         } else {
                             finalContent = content || '';
                         }
                         
-                        if (index === 0 && type !== 'patrimonio') {
-                             cells += `<td class="${cellClass}">${newIndicator}${finalContent}</td>`;
-                        } else if (index === 2 && type === 'patrimonio') {
+                        // Add new indicator to the correct column
+                        if ((type === 'patrimonio' && index === 2) || (type !== 'patrimonio' && index === 0)) {
                              cells += `<td class="${cellClass}">${newIndicator}${finalContent}</td>`;
                         }
                         else {
@@ -1668,8 +1698,10 @@
         }
         
         function createCategorySelector(type, selectedCategory) {
-            if (!categorias[type]) return selectedCategory || '';
-            const options = categorias[type].map(cat => `<option value="${cat}" ${cat === selectedCategory ? 'selected' : ''}>${cat}</option>`).join('');
+            if (!categorias[type] || (type === 'patrimonio' && selectedCategory === 'Deudas')) return selectedCategory || '';
+
+            let options = categorias[type].map(cat => `<option value="${cat}" ${cat === selectedCategory ? 'selected' : ''}>${cat}</option>`).join('');
+            
             return `<select class="w-full bg-transparent border-none focus:ring-0 focus:outline-none p-1 rounded-md hover:bg-gray-100">${options}</select>`;
         }
 
