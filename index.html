@@ -64,7 +64,6 @@
         .modal-content {
             transition: transform 0.25s ease;
         }
-        /* New styles for better layout and text wrapping */
         .table-container, .overflow-x-auto {
             overflow-x: visible;
         }
@@ -96,7 +95,6 @@
     <!-- Contenido principal de la app (inicialmente oculto) -->
     <div id="app-container" class="hidden">
         <div id="notification-area" class="fixed top-5 right-5 z-[100] w-full max-w-sm"></div>
-        <!-- Widened container for more space -->
         <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl">
             <!-- Encabezado -->
             <header class="bg-white p-6 rounded-xl shadow-md mb-8">
@@ -189,7 +187,7 @@
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="patrimonio">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="tipo">Tipo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="descripcion">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Fiscal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="patrimonio-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="tipo">Tipo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="descripcion">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Fiscal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th></tr></thead><tbody id="patrimonio-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="patrimonio-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                         <div id="retenciones" class="tab-pane hidden">
@@ -200,7 +198,7 @@
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="retenciones">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="tercero">Tercero<span class="sort-icon"></span></th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="concepto">Concepto<span class="sort-icon"></span></th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="retenciones-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="table-container"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="tercero">Tercero<span class="sort-icon"></span></th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="retenciones" data-key="concepto">Concepto<span class="sort-icon"></span></th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th></tr></thead><tbody id="retenciones-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="retenciones-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                          <div id="archivos" class="tab-pane hidden">
@@ -316,7 +314,7 @@
         let sortState = {};
         let isInitialLoad = true;
         let latestFileName = null; 
-        let expandedGroupIds = new Set(); // Stores the IDs of expanded groups
+        let expandedGroupIds = new Set(); 
 
         const categorias = {
             ingresos: ['Renta Laboral', 'Honorarios', 'Renta de Capital', 'Renta no Laboral', 'No Constitutivo', 'Otro'],
@@ -503,6 +501,19 @@
                     openManualEntryModal(type);
                 });
             });
+
+            const handleBodyClick = (event) => {
+                const editButton = event.target.closest('.edit-manual-btn');
+                if (editButton) {
+                    const type = editButton.dataset.type;
+                    const itemId = editButton.dataset.itemId;
+                    openManualEntryModal(type, itemId);
+                }
+            };
+            document.getElementById('patrimonio-body').addEventListener('click', handleBodyClick);
+            document.getElementById('retenciones-body').addEventListener('click', handleBodyClick);
+
+
             document.getElementById('archivos-body').addEventListener('click', (event) => {
                 if (event.target.classList.contains('delete-file-btn')) {
                     const fileName = event.target.dataset.filename;
@@ -513,6 +524,15 @@
                 const body = document.getElementById(id);
                 if (body) {
                      body.addEventListener('click', e => {
+                        // Handle manual edit button click
+                        const editButton = e.target.closest('.edit-manual-btn');
+                        if (editButton) {
+                            const type = editButton.dataset.type;
+                            const itemId = editButton.dataset.itemId;
+                            openManualEntryModal(type, itemId);
+                            return; // Stop further processing
+                        }
+
                         const header = e.target.closest('.group-header');
                         if (!header) return;
 
@@ -664,14 +684,20 @@
             }
         }
 
-        function openManualEntryModal(type) {
+        function openManualEntryModal(type, itemId = null) {
             const modal = document.getElementById('manual-entry-modal');
             const form = document.getElementById('modal-form');
             const title = document.getElementById('modal-title');
             const saveBtn = document.getElementById('modal-save');
             form.innerHTML = ''; 
-            title.textContent = `Añadir a ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+
+            const isEditing = itemId !== null;
+            const itemToEdit = isEditing ? fichaContribuyente[type].find(item => item.manualId === itemId) : null;
+
+            title.textContent = isEditing ? `Editar Entrada Manual` : `Añadir a ${type.charAt(0).toUpperCase() + type.slice(1)}`;
             let formHtml = '';
+
+            // Generate form fields based on type
             switch (type) {
                 case 'ingresos':
                     formHtml = `
@@ -708,50 +734,77 @@
                     break;
             }
             form.innerHTML = formHtml;
+            
+            // If editing, pre-fill the form
+            if (isEditing && itemToEdit) {
+                Object.keys(itemToEdit).forEach(key => {
+                    const input = form.querySelector(`#manual-${key}`);
+                    if (input) {
+                        input.value = itemToEdit[key];
+                    }
+                });
+            }
+
             const newSaveBtn = saveBtn.cloneNode(true);
             saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-            newSaveBtn.addEventListener('click', () => saveManualEntry(type));
+            newSaveBtn.addEventListener('click', () => saveManualEntry(type, itemId));
+
             modal.classList.remove('hidden');
             modal.querySelector('.modal-content').classList.remove('scale-95');
         }
 
-        function saveManualEntry(type) {
+        function saveManualEntry(type, itemId = null) {
             const valor = parseFloat(document.getElementById('manual-valor').value);
             if (isNaN(valor)) {
                 showNotification('El campo "Valor" es obligatorio y debe ser un número.', 'error');
                 return;
             }
-            let newItem = {
-                valor: valor,
-                estado: 'Pendiente',
-                fuente: 'Entrada Manual'
-            };
+
+            const isEditing = itemId !== null;
+            let item;
+
+            if (isEditing) {
+                item = fichaContribuyente[type].find(i => i.manualId === itemId);
+            } else {
+                item = {
+                    estado: 'Pendiente',
+                    fuente: 'Entrada Manual',
+                    manualId: crypto.randomUUID()
+                };
+            }
+
+            item.valor = valor;
+
             switch(type) {
                 case 'ingresos':
-                    newItem.tercero = document.getElementById('manual-tercero').value;
-                    newItem.concepto = document.getElementById('manual-concepto').value;
-                    newItem.categoria = document.getElementById('manual-categoria').value;
+                    item.tercero = document.getElementById('manual-tercero').value;
+                    item.concepto = document.getElementById('manual-concepto').value;
+                    item.categoria = document.getElementById('manual-categoria').value;
                     break;
                 case 'deducciones':
-                    newItem.tercero = document.getElementById('manual-tercero').value;
-                    newItem.concepto = document.getElementById('manual-concepto').value;
-                    newItem.base = parseFloat(document.getElementById('manual-base').value) || null;
-                    newItem.categoria = document.getElementById('manual-categoria').value;
+                    item.tercero = document.getElementById('manual-tercero').value;
+                    item.concepto = document.getElementById('manual-concepto').value;
+                    item.base = parseFloat(document.getElementById('manual-base').value) || null;
+                    item.categoria = document.getElementById('manual-categoria').value;
                     break;
                 case 'patrimonio':
-                    newItem.tipo = document.getElementById('manual-tipo').value;
-                    newItem.categoria = document.getElementById('manual-categoria').value;
-                    newItem.descripcion = document.getElementById('manual-descripcion').value;
-                     if (newItem.tipo === 'Pasivo') {
-                        newItem.categoria = 'Deudas';
+                    item.tipo = document.getElementById('manual-tipo').value;
+                    item.categoria = document.getElementById('manual-categoria').value;
+                    item.descripcion = document.getElementById('manual-descripcion').value;
+                     if (item.tipo === 'Pasivo') {
+                        item.categoria = 'Deudas';
                     }
                     break;
                 case 'retenciones':
-                      newItem.tercero = document.getElementById('manual-tercero').value;
-                      newItem.concepto = document.getElementById('manual-concepto').value;
+                      item.tercero = document.getElementById('manual-tercero').value;
+                      item.concepto = document.getElementById('manual-concepto').value;
                     break;
             }
-            fichaContribuyente[type].push(newItem);
+            
+            if (!isEditing) {
+                fichaContribuyente[type].push(item);
+            }
+
             populateAllTables();
             document.getElementById('manual-entry-modal').classList.add('hidden');
         }
@@ -1496,10 +1549,10 @@
         }
 
         function populateAllTables() {
-            populateTable('ingresos', ['tercero', 'concepto', 'valor', 'categoria', 'estado', 'fuente']);
-            populateTable('deducciones', ['tercero', 'concepto', 'base', 'valor', 'categoria', 'estado', 'fuente']);
-            populateTable('patrimonio', ['tipo', 'categoria', 'descripcion', 'valor', 'estado', 'fuente']);
-            populateTable('retenciones', ['tercero', 'concepto', 'valor', 'estado', 'fuente']);
+            populateTable('ingresos', []); // Columns are defined inside for grouped view
+            populateTable('deducciones', []); // Columns are defined inside for grouped view
+            populateTable('patrimonio', ['tipo', 'categoria', 'descripcion', 'valor', 'estado', 'fuente', 'acciones']);
+            populateTable('retenciones', ['tercero', 'concepto', 'valor', 'estado', 'fuente', 'acciones']);
             updateSummary();
             renderOverallSummary();
             renderFinancialStatements();
@@ -1596,9 +1649,9 @@
                         </select>`;
                     let headerHTML = '';
                     if (type === 'ingresos') {
-                        headerHTML = `<th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tercero</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${groupCategorySelectorHTML}</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>`;
+                        headerHTML = `<th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tercero</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${groupCategorySelectorHTML}</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>`;
                     } else {
-                        headerHTML = `<th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tercero</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${groupCategorySelectorHTML}</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Base</th><th class="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>`;
+                        headerHTML = `<th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tercero</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${groupCategorySelectorHTML}</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Base</th><th class="px-6 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th><th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>`;
                     }
                     subHeaderRow.innerHTML = headerHTML;
                     const subTbody = subTable.createTBody();
@@ -1608,19 +1661,23 @@
                         let cellsHTML = '';
                         const isItemNew = item.fuente === latestFileName;
                         const newItemIndicator = isItemNew ? '<span class="inline-block w-2 h-2 mr-2 bg-blue-500 rounded-full"></span>' : '';
+                        const editButton = item.fuente === 'Entrada Manual' ? `<button class="edit-manual-btn text-blue-500 hover:underline" data-type="${type}" data-item-id="${item.manualId}">Editar</button>` : '';
+
                         if (type === 'ingresos') {
                             cellsHTML = `
                                 <td class="px-6 py-3 text-sm text-gray-700 border-t">${newItemIndicator}${item.tercero || ''}</td>
                                 <td class="px-6 py-3 text-sm text-gray-700 border-t">${createCategorySelector(type, item.categoria)}</td>
                                 <td class="px-6 py-3 text-sm text-gray-700 border-t">${createStatusSelector(item.estado)}</td>
-                                <td class="px-6 py-3 text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>`;
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${editButton}</td>`;
                         } else {
                             cellsHTML = `
                                 <td class="px-6 py-3 text-sm text-gray-700 border-t">${newItemIndicator}${item.tercero || ''}</td>
                                 <td class="px-6 py-3 text-sm text-gray-700 border-t">${createCategorySelector(type, item.categoria)}</td>
                                 <td class="px-6 py-3 text-sm text-gray-700 border-t">${createStatusSelector(item.estado)}</td>
                                 <td class="px-6 py-3 text-sm text-gray-500 border-t text-right font-mono">${item.base ? formatCurrency(item.base) : ''}</td>
-                                <td class="px-6 py-3 text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>`;
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t text-right font-mono">${formatCurrency(item.valor)}</td>
+                                <td class="px-6 py-3 text-sm text-gray-700 border-t">${editButton}</td>`;
                         }
                         row.innerHTML = cellsHTML;
                         addSelectListeners(row, item);
@@ -1640,6 +1697,7 @@
                     let cells = '';
                     const isNew = item.fuente === latestFileName;
                     const newIndicator = isNew ? '<span class="inline-block w-2 h-2 mr-2 bg-blue-500 rounded-full"></span>' : '';
+                    
                     columns.forEach((col, index) => {
                         let content = item[col];
                         let cellClass = 'px-6 py-4 text-sm text-gray-700';
@@ -1657,7 +1715,10 @@
                         } else if (col === 'fuente') {
                             finalContent = content || '';
                             cellClass = 'px-6 py-4 text-xs text-gray-500';
-                        } else {
+                        } else if (col === 'acciones') {
+                             finalContent = item.fuente === 'Entrada Manual' ? `<button class="edit-manual-btn text-blue-500 hover:underline" data-type="${type}" data-item-id="${item.manualId}">Editar</button>` : '';
+                        }
+                        else {
                             finalContent = content || '';
                         }
                         
