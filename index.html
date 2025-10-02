@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -224,7 +224,7 @@
     <!-- Modal para revisión de IA -->
     <div id="ai-review-modal" class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden z-50">
         <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-        <div class="modal-content bg-white w-11/12 md:max-w-lg mx-auto rounded-lg shadow-lg z-50 overflow-y-auto transform scale-95">
+        <div class="modal-content bg-white w-11/12 md:max-w-2xl mx-auto rounded-lg shadow-lg z-50 overflow-y-auto transform scale-95">
             <div class="p-6">
                 <div class="flex justify-between items-center pb-3 border-b">
                     <p class="text-2xl font-bold">Resultados de la IA</p>
@@ -233,7 +233,7 @@
                     </div>
                 </div>
                 <p class="text-sm text-gray-500 mt-2">Por favor, revisa y corrige los valores extraídos antes de guardarlos.</p>
-                <form id="ai-review-form" class="space-y-4 mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form id="ai-review-form" class="space-y-4 mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     <div><label class="block text-sm font-medium text-gray-700">Nombre Contribuyente</label><input type="text" id="ai-review-nombre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">NIT</label><input type="text" id="ai-review-nit" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div class="md:col-span-2"><hr></div>
@@ -241,15 +241,21 @@
                     <div><label class="block text-sm font-medium text-gray-700">Valor Activo/Pasivo</label><input type="number" id="ai-review-patrimonioValor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">Categoría Activo</label><select id="ai-review-patrimonioCategoria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></select></div>
                     <div class="md:col-span-2"><hr></div>
-                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Datos Bancarios (adicionales)</div>
+                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Rentas de Trabajo (Form. 220)</div>
+                    <div><label class="block text-sm font-medium text-gray-700">Pagador / Agente Retenedor</label><input type="text" id="ai-review-agenteRetenedor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">Salarios (Casilla 36)</label><input type="number" id="ai-review-salarios" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">Prestaciones Sociales (Casilla 42)</label><input type="number" id="ai-review-prestaciones" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                     <div><label class="block text-sm font-medium text-gray-700">Retención por Salarios (Casilla 60)</label><input type="number" id="ai-review-retencionSalarios" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div class="md:col-span-2"><hr></div>
+                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Seguridad Social (PILA / Form. 220)</div>
+                    <div><label class="block text-sm font-medium text-gray-700">Aporte Salud (Casilla 53)</label><input type="number" id="ai-review-aporteSalud" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">Aporte Pensión (Casilla 54)</label><input type="number" id="ai-review-aportePension" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div class="md:col-span-2"><hr></div>
+                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Datos Bancarios (Adicionales)</div>
                     <div><label class="block text-sm font-medium text-gray-700">Rendimientos</label><input type="number" id="ai-review-rendimientos" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">Retención Rendimientos</label><input type="number" id="ai-review-retencionRendimientos" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">GMF (4x1000)</label><input type="number" id="ai-review-gmf" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">Intereses Pagados (Créditos)</label><input type="number" id="ai-review-interesesPagados" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
-                    <div class="md:col-span-2"><hr></div>
-                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Seguridad Social (PILA)</div>
-                    <div><label class="block text-sm font-medium text-gray-700">Aporte Salud</label><input type="number" id="ai-review-aporteSalud" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
-                    <div><label class="block text-sm font-medium text-gray-700">Aporte Pensión</label><input type="number" id="ai-review-aportePension" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                 </form>
                 <div class="flex justify-end pt-6 mt-4 border-t">
                     <button id="ai-modal-cancel" class="mr-2 px-4 bg-gray-200 p-3 rounded-lg text-gray-800 hover:bg-gray-300">Cancelar</button>
@@ -297,7 +303,7 @@
         
         let sortState = {};
         let isInitialLoad = true;
-        let latestFileName = null; // Variable to track the latest uploaded file
+        let latestFileName = null; 
 
         const categorias = {
             ingresos: ['Renta Laboral', 'Honorarios', 'Renta de Capital', 'Renta no Laboral', 'No Constitutivo', 'Otro'],
@@ -316,7 +322,6 @@
             const passwordInput = document.getElementById('password-input');
             const authError = document.getElementById('auth-error');
             
-            // *** CAMBIA ESTA CONTRASEÑA ***
             const ACCESS_PASSWORD = "pro-renta-2025"; 
 
             authForm.addEventListener('submit', (e) => {
@@ -359,7 +364,7 @@
                     } else {
                         showNotification('Por favor, ingresa una API Key válida.', 'error');
                     }
-                }, { once: true }); // Use { once: true } to prevent multiple listeners
+                }, { once: true });
             }
         }
 
@@ -713,8 +718,7 @@
                     newItem.tipo = document.getElementById('manual-tipo').value;
                     newItem.categoria = document.getElementById('manual-categoria').value;
                     newItem.descripcion = document.getElementById('manual-descripcion').value;
-                     // For Pasivos, categoria is always 'Deudas'
-                    if (newItem.tipo === 'Pasivo') {
+                     if (newItem.tipo === 'Pasivo') {
                         newItem.categoria = 'Deudas';
                     }
                     break;
@@ -835,7 +839,6 @@
         function exportForGem() {
             const consolidated = [];
             
-            // Helper function to format description
             const formatDesc = (item, defaultConcept) => {
                 if(item.descripcion) return item.descripcion;
                 if(item.tercero && item.concepto) return `${item.tercero} - ${item.concepto}`;
@@ -844,7 +847,6 @@
                 return defaultConcept || 'N/A';
             }
 
-            // Ingresos
             fichaContribuyente.ingresos.filter(i => i.estado === 'Conciliado').forEach(item => {
                 consolidated.push({
                     'Tipo': 'Ingreso',
@@ -854,7 +856,6 @@
                 });
             });
 
-            // Deducciones
             fichaContribuyente.deducciones.filter(i => i.estado === 'Conciliado').forEach(item => {
                 consolidated.push({
                     'Tipo': 'Deducción',
@@ -864,17 +865,15 @@
                 });
             });
 
-            // Patrimonio
             fichaContribuyente.patrimonio.filter(i => i.estado === 'Conciliado').forEach(item => {
                 consolidated.push({
-                    'Tipo': item.tipo, // 'Activo' o 'Pasivo'
+                    'Tipo': item.tipo, 
                     'Categoria': item.categoria,
                     'Descripcion': formatDesc(item),
                     'Valor': item.valor
                 });
             });
 
-            // Retenciones
             fichaContribuyente.retenciones.filter(i => i.estado === 'Conciliado').forEach(item => {
                 consolidated.push({
                     'Tipo': 'Retención a Favor',
@@ -1060,17 +1059,21 @@
             }
 
             const patrimonioCategoriasStr = categorias.patrimonio.join("', '");
-             const systemPrompt = `Eres un asistente contable experto en Colombia. Analiza el texto o la imagen de un documento financiero. Puede ser un certificado bancario, de vehículo, de un bien inmueble o una planilla de pago de seguridad social (PILA). Extrae los siguientes valores. Si un valor no se encuentra, omite la clave o déjalo en 0. El resultado DEBE ser un objeto JSON válido.
-                 - contribuyente.nombre: Nombre de la persona.
-                 - contribuyente.nit: NIT o número de identificación.
+             const systemPrompt = `Eres un asistente contable experto en Colombia. Analiza el texto o la imagen de un documento financiero. Puede ser un certificado bancario, de vehículo, de un bien inmueble, una planilla de pago de seguridad social (PILA) o un Certificado de Ingresos y Retenciones (Formulario 220). Extrae los siguientes valores. Si un valor no se encuentra, omite la clave o déjalo en 0. El resultado DEBE ser un objeto JSON válido.
+                 - contribuyente.nombre: Nombre del empleado.
+                 - contribuyente.nit: NIT o número de identificación del empleado.
+                 - agenteRetenedor: Nombre o Razón Social del pagador o agente retenedor.
                  - patrimonio.valor: El valor principal del activo o pasivo (ej. Saldo de cuenta, avalúo catastral, valor del vehículo, monto de la deuda).
                  - patrimonio.categoria: Clasifica el activo en UNA de las siguientes categorías: '${patrimonioCategoriasStr}'. Si es una deuda, ignora esta clasificación.
+                 - salarios: El valor de "Pagos por salarios" (Casilla 36 del Formulario 220).
+                 - prestaciones: El valor de "Pagos por prestaciones sociales" (Casilla 42 del Formulario 220).
+                 - aporteSalud: El valor de "Aportes obligatorios por salud" (Casilla 53 del Formulario 220 o el total de Salud en una PILA).
+                 - aportePension: El valor de "Aportes obligatorios a fondos de pensiones" (Casilla 54 del Formulario 220 o el total de Pensión en una PILA).
+                 - retencionSalarios: El valor de "retención en la fuente por ingresos laborales" (Casilla 60 del Formulario 220).
                  - rendimientos: La "Base Gravable" de los "Rendimientos Financieros".
                  - retencionRendimientos: El "Valor Retención" de los "Rendimientos Financieros".
                  - gmf: El "Valor GMF" del "Gravamen a los Movimientos Financieros".
-                 - interesesPagados: El valor de "Intereses Causados" o "Intereses Pagados".
-                 - aporteSalud: El valor total del aporte a salud. Búscalo como "Salud".
-                 - aportePension: El valor total del aporte a pensión. Búscalo como "Pensión".`;
+                 - interesesPagados: El valor de "Intereses Causados" o "Intereses Pagados".`;
 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
@@ -1119,6 +1122,14 @@
             document.getElementById('ai-review-nit').value = data.contribuyente?.nit || '';
             document.getElementById('ai-review-patrimonioValor').value = data.patrimonio?.valor || 0;
             patrimonioCategoriaSelect.value = data.patrimonio?.categoria || 'Otros activos';
+
+            // Populate Form 220 fields
+            document.getElementById('ai-review-agenteRetenedor').value = data.agenteRetenedor || '';
+            document.getElementById('ai-review-salarios').value = data.salarios || 0;
+            document.getElementById('ai-review-prestaciones').value = data.prestaciones || 0;
+            document.getElementById('ai-review-retencionSalarios').value = data.retencionSalarios || 0;
+
+            // Populate other fields
             document.getElementById('ai-review-rendimientos').value = data.rendimientos || 0;
             document.getElementById('ai-review-retencionRendimientos').value = data.retencionRendimientos || 0;
             document.getElementById('ai-review-gmf').value = data.gmf || 0;
@@ -1137,6 +1148,8 @@
         }
 
         function saveAndClassifyAiData(fileName) {
+            const agenteRetenedor = document.getElementById('ai-review-agenteRetenedor').value || 'Pagador No Identificado';
+
             const data = {
                 contribuyente: {
                     nombre: document.getElementById('ai-review-nombre').value,
@@ -1146,6 +1159,9 @@
                     valor: parseFloat(document.getElementById('ai-review-patrimonioValor').value) || 0,
                     categoria: document.getElementById('ai-review-patrimonioCategoria').value
                 },
+                salarios: parseFloat(document.getElementById('ai-review-salarios').value) || 0,
+                prestaciones: parseFloat(document.getElementById('ai-review-prestaciones').value) || 0,
+                retencionSalarios: parseFloat(document.getElementById('ai-review-retencionSalarios').value) || 0,
                 rendimientos: parseFloat(document.getElementById('ai-review-rendimientos').value) || 0,
                 retencionRendimientos: parseFloat(document.getElementById('ai-review-retencionRendimientos').value) || 0,
                 gmf: parseFloat(document.getElementById('ai-review-gmf').value) || 0,
@@ -1172,6 +1188,18 @@
                 });
             }
 
+            // Classify Form 220 data
+            if (data.salarios > 0) {
+                 fichaContribuyente.ingresos.push({ tercero: agenteRetenedor, concepto: 'Salarios', valor: data.salarios, categoria: 'Renta Laboral', estado: 'Pendiente', fuente: fileName });
+            }
+            if (data.prestaciones > 0) {
+                 fichaContribuyente.ingresos.push({ tercero: agenteRetenedor, concepto: 'Prestaciones Sociales', valor: data.prestaciones, categoria: 'Renta Laboral', estado: 'Pendiente', fuente: fileName });
+            }
+            if (data.retencionSalarios > 0) {
+                 fichaContribuyente.retenciones.push({ tercero: agenteRetenedor, concepto: 'Retención por Salarios', valor: data.retencionSalarios, estado: 'Pendiente', fuente: fileName });
+            }
+
+            // Classify other data
             if (data.rendimientos > 0) {
                 fichaContribuyente.ingresos.push({ tercero: 'Entidad Financiera', concepto: 'Rendimientos Financieros', valor: data.rendimientos, categoria: 'Renta de Capital', estado: 'Pendiente', fuente: fileName });
             }
@@ -1682,7 +1710,6 @@
             const ingresosConciliados = fichaContribuyente.ingresos.filter(item => item.estado === 'Conciliado');
             const totalIngresos = ingresosConciliados.reduce((sum, item) => sum + item.valor, 0);
             
-            // New detailed grouping for Ingresos
             const ingresosByCatAndConcept = ingresosConciliados.reduce((acc, item) => {
                 const categoria = item.categoria || 'Otro';
                 const concepto = item.concepto || 'Sin Concepto';
@@ -1700,7 +1727,6 @@
             const deduccionesConciliadas = fichaContribuyente.deducciones.filter(item => item.estado === 'Conciliado');
             const totalDeducciones = deduccionesConciliadas.reduce((sum, item) => sum + item.valor, 0);
 
-            // New detailed grouping for Deducciones
             const deduccionesByCatAndConcept = deduccionesConciliadas.reduce((acc, item) => {
                 const categoria = item.categoria || 'Otro';
                 const concepto = item.concepto || 'Sin Concepto';
@@ -1981,5 +2007,4 @@
     </script>
 </body>
 </html>
-
 
