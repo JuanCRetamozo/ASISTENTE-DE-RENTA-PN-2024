@@ -171,13 +171,13 @@
                         </div>
                         <div id="patrimonio" class="tab-pane hidden">
                             <div class="p-4 bg-gray-50 border-b flex flex-wrap gap-4 justify-between items-center">
-                                <input type="text" class="filter-input w-full md:w-auto flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" data-target="patrimonio-body" data-col="1" placeholder="Filtrar por descripción...">
+                                <input type="text" class="filter-input w-full md:w-auto flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" data-target="patrimonio-body" data-col="2" placeholder="Filtrar por descripción...">
                                  <div class="flex gap-2">
                                     <button class="add-manual-btn whitespace-nowrap bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg" data-target="patrimonio">Añadir Manualmente</button>
                                     <button class="concile-all-btn whitespace-nowrap bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-target="patrimonio">Conciliar Todo</button>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="tipo">Tipo Activo/Pasivo<span class="sort-icon"></span></th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="descripcion">Descripción<span class="sort-icon"></span></th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Fiscal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="patrimonio-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+                            <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="tipo">Tipo</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th><th class="sortable-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-type="patrimonio" data-key="descripcion">Descripción</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Fiscal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuente</th></tr></thead><tbody id="patrimonio-body" class="bg-white divide-y divide-gray-200"></tbody></table></div>
                             <div id="patrimonio-summary" class="mt-8 border-t pt-6"></div>
                         </div>
                         <div id="retenciones" class="tab-pane hidden">
@@ -237,8 +237,11 @@
                     <div><label class="block text-sm font-medium text-gray-700">Nombre Contribuyente</label><input type="text" id="ai-review-nombre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">NIT</label><input type="text" id="ai-review-nit" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div class="md:col-span-2"><hr></div>
-                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Datos Bancarios</div>
-                    <div><label class="block text-sm font-medium text-gray-700">Saldo Ahorros</label><input type="number" id="ai-review-saldoAhorros" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Patrimonio</div>
+                    <div><label class="block text-sm font-medium text-gray-700">Valor Activo/Pasivo</label><input type="number" id="ai-review-patrimonioValor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">Categoría Activo</label><select id="ai-review-patrimonioCategoria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></select></div>
+                    <div class="md:col-span-2"><hr></div>
+                    <div class="font-medium text-gray-500 text-sm md:col-span-2">Datos Bancarios (adicionales)</div>
                     <div><label class="block text-sm font-medium text-gray-700">Rendimientos</label><input type="number" id="ai-review-rendimientos" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">Retención Rendimientos</label><input type="number" id="ai-review-retencionRendimientos" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                     <div><label class="block text-sm font-medium text-gray-700">GMF (4x1000)</label><input type="number" id="ai-review-gmf" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
@@ -299,6 +302,7 @@
         const categorias = {
             ingresos: ['Renta Laboral', 'Honorarios', 'Renta de Capital', 'Renta no Laboral', 'No Constitutivo', 'Otro'],
             deducciones: ['Costo/Gasto Procedente', 'Deducción Salud', 'Deducción Vivienda', 'Aportes AFC/Pensiones', 'Dependientes', 'Donaciones', 'GMF (4x1000)', 'Beneficio Facturación', 'Otro'],
+            patrimonio: ['Bancos y efectivo', 'Inversiones', 'Cuentas por cobrar', 'Inventarios', 'Vehículos', 'Bienes inmuebles y/o acciones', 'Otros activos']
         };
         const estados = ['Pendiente', 'Conciliado', 'Descartado'];
 
@@ -658,8 +662,10 @@
                     `;
                     break;
                 case 'patrimonio':
+                    const patrimonioOptions = categorias.patrimonio.map(c => `<option>${c}</option>`).join('');
                     formHtml = `
                         <div><label class="block text-sm font-medium text-gray-700">Tipo</label><select id="manual-tipo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"><option>Activo</option><option>Pasivo</option></select></div>
+                        <div><label class="block text-sm font-medium text-gray-700">Categoría</label><select id="manual-categoria" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">${patrimonioOptions}</select></div>
                         <div><label class="block text-sm font-medium text-gray-700">Descripción</label><input type="text" id="manual-descripcion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                         <div><label class="block text-sm font-medium text-gray-700">Valor Fiscal</label><input type="number" id="manual-valor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required></div>
                     `;
@@ -705,7 +711,12 @@
                     break;
                 case 'patrimonio':
                     newItem.tipo = document.getElementById('manual-tipo').value;
+                    newItem.categoria = document.getElementById('manual-categoria').value;
                     newItem.descripcion = document.getElementById('manual-descripcion').value;
+                     // For Pasivos, categoria is always 'Deudas'
+                    if (newItem.tipo === 'Pasivo') {
+                        newItem.categoria = 'Deudas';
+                    }
                     break;
                 case 'retenciones':
                       newItem.tercero = document.getElementById('manual-tercero').value;
@@ -857,7 +868,7 @@
             fichaContribuyente.patrimonio.filter(i => i.estado === 'Conciliado').forEach(item => {
                 consolidated.push({
                     'Tipo': item.tipo, // 'Activo' o 'Pasivo'
-                    'Categoria': item.tipo,
+                    'Categoria': item.categoria,
                     'Descripcion': formatDesc(item),
                     'Valor': item.valor
                 });
@@ -1048,10 +1059,12 @@
                 return null;
             }
 
-             const systemPrompt = `Eres un asistente contable experto en Colombia. Analiza el texto o la imagen de un documento financiero. Puede ser un certificado tributario bancario o una planilla de pago de seguridad social (PILA). Extrae los siguientes valores numéricos. Si un valor no se encuentra, omite la clave o déjalo en 0. El resultado DEBE ser un objeto JSON válido.
+            const patrimonioCategoriasStr = categorias.patrimonio.join("', '");
+             const systemPrompt = `Eres un asistente contable experto en Colombia. Analiza el texto o la imagen de un documento financiero. Puede ser un certificado bancario, de vehículo, de un bien inmueble o una planilla de pago de seguridad social (PILA). Extrae los siguientes valores. Si un valor no se encuentra, omite la clave o déjalo en 0. El resultado DEBE ser un objeto JSON válido.
                  - contribuyente.nombre: Nombre de la persona.
                  - contribuyente.nit: NIT o número de identificación.
-                 - saldoAhorros: El valor de "Saldo Cuenta Ahorros".
+                 - patrimonio.valor: El valor principal del activo o pasivo (ej. Saldo de cuenta, avalúo catastral, valor del vehículo, monto de la deuda).
+                 - patrimonio.categoria: Clasifica el activo en UNA de las siguientes categorías: '${patrimonioCategoriasStr}'. Si es una deuda, ignora esta clasificación.
                  - rendimientos: La "Base Gravable" de los "Rendimientos Financieros".
                  - retencionRendimientos: El "Valor Retención" de los "Rendimientos Financieros".
                  - gmf: El "Valor GMF" del "Gravamen a los Movimientos Financieros".
@@ -1066,7 +1079,7 @@
                 parts = [{ text: input }];
             } else { // It's an image object
                 parts = [
-                    { text: "Extrae los datos financieros de esta imagen de un certificado tributario o planilla de seguridad social." },
+                    { text: "Extrae los datos financieros de esta imagen." },
                     { inlineData: { mimeType: input.mimeType, data: input.data } }
                 ];
             }
@@ -1098,10 +1111,14 @@
         
         function openAiReviewModal(data, fileName) {
             const modal = document.getElementById('ai-review-modal');
+            const patrimonioCategoriaSelect = document.getElementById('ai-review-patrimonioCategoria');
+            
+            patrimonioCategoriaSelect.innerHTML = categorias.patrimonio.map(c => `<option value="${c}">${c}</option>`).join('');
             
             document.getElementById('ai-review-nombre').value = data.contribuyente?.nombre || '';
             document.getElementById('ai-review-nit').value = data.contribuyente?.nit || '';
-            document.getElementById('ai-review-saldoAhorros').value = data.saldoAhorros || 0;
+            document.getElementById('ai-review-patrimonioValor').value = data.patrimonio?.valor || 0;
+            patrimonioCategoriaSelect.value = data.patrimonio?.categoria || 'Otros activos';
             document.getElementById('ai-review-rendimientos').value = data.rendimientos || 0;
             document.getElementById('ai-review-retencionRendimientos').value = data.retencionRendimientos || 0;
             document.getElementById('ai-review-gmf').value = data.gmf || 0;
@@ -1125,7 +1142,10 @@
                     nombre: document.getElementById('ai-review-nombre').value,
                     nit: document.getElementById('ai-review-nit').value
                 },
-                saldoAhorros: parseFloat(document.getElementById('ai-review-saldoAhorros').value) || 0,
+                patrimonio: {
+                    valor: parseFloat(document.getElementById('ai-review-patrimonioValor').value) || 0,
+                    categoria: document.getElementById('ai-review-patrimonioCategoria').value
+                },
                 rendimientos: parseFloat(document.getElementById('ai-review-rendimientos').value) || 0,
                 retencionRendimientos: parseFloat(document.getElementById('ai-review-retencionRendimientos').value) || 0,
                 gmf: parseFloat(document.getElementById('ai-review-gmf').value) || 0,
@@ -1139,9 +1159,19 @@
                 fichaContribuyente.nit = data.contribuyente.nit;
                 updateContribuyenteInfoUI();
             }
-            if (data.saldoAhorros > 0) {
-                fichaContribuyente.patrimonio.push({ tipo: 'Activo', descripcion: `Saldo Cta. Ahorros - ${fileName}`, valor: data.saldoAhorros, estado: 'Pendiente', fuente: fileName });
+
+            if (data.patrimonio.valor !== 0) {
+                 const tipo = data.patrimonio.categoria === 'Deudas' ? 'Pasivo' : 'Activo';
+                 fichaContribuyente.patrimonio.push({ 
+                     tipo: tipo, 
+                     categoria: data.patrimonio.categoria,
+                     descripcion: `Activo/Pasivo de ${fileName}`, 
+                     valor: data.patrimonio.valor, 
+                     estado: 'Pendiente', 
+                     fuente: fileName 
+                });
             }
+
             if (data.rendimientos > 0) {
                 fichaContribuyente.ingresos.push({ tercero: 'Entidad Financiera', concepto: 'Rendimientos Financieros', valor: data.rendimientos, categoria: 'Renta de Capital', estado: 'Pendiente', fuente: fileName });
             }
@@ -1369,9 +1399,24 @@
                 } else if (uso.includes('r29') || uso.includes('tope 2') || detalle.includes('saldo cdt') || detalle.includes('avalúo vehículo') || detalle.includes('cuenta por cobrar')) {
                     let tipo = 'Activo';
                     if (detalle.includes('deuda')) tipo = 'Pasivo';
-                    fichaContribuyente.patrimonio.push({ tipo: tipo, descripcion: `${tercero} - ${row[colMap.detalle]}`, valor: valor, estado: 'Pendiente', fuente: fileName });
+                    
+                    let categoria = 'Otros activos';
+                    if (detalle.includes('saldo')) categoria = 'Bancos y efectivo';
+                    if (detalle.includes('cdt')) categoria = 'Inversiones';
+                    if (detalle.includes('vehículo')) categoria = 'Vehículos';
+                    if (detalle.includes('inmueble')) categoria = 'Bienes inmuebles y/o acciones';
+
+                    fichaContribuyente.patrimonio.push({ 
+                        tipo: tipo, 
+                        categoria: categoria,
+                        descripcion: `${tercero} - ${row[colMap.detalle]}`, 
+                        valor: valor, 
+                        estado: 'Pendiente', 
+                        fuente: fileName 
+                    });
+
                 } else if (uso.includes('r30')) {
-                     fichaContribuyente.patrimonio.push({ tipo: 'Pasivo', descripcion: `${tercero} - ${row[colMap.detalle]}`, valor: valor, estado: 'Pendiente', fuente: fileName });
+                     fichaContribuyente.patrimonio.push({ tipo: 'Pasivo', categoria: 'Deudas', descripcion: `${tercero} - ${row[colMap.detalle]}`, valor: valor, estado: 'Pendiente', fuente: fileName });
                 } else if (uso.includes('r74') || uso.includes('r58') || uso.includes('r43') || (uso.includes('tope 1') && !detalle.includes('costos'))) {
                     let categoria = 'Renta no Laboral';
                     if (uso.includes('r58') || detalle.includes('rendimientos')) categoria = 'Renta de Capital';
@@ -1400,7 +1445,7 @@
         function populateAllTables() {
             populateTable('ingresos', ['tercero', 'concepto', 'valor', 'categoria', 'estado', 'fuente']);
             populateTable('deducciones', ['tercero', 'concepto', 'base', 'valor', 'categoria', 'estado', 'fuente']);
-            populateTable('patrimonio', ['tipo', 'descripcion', 'valor', 'estado', 'fuente']);
+            populateTable('patrimonio', ['tipo', 'categoria', 'descripcion', 'valor', 'estado', 'fuente']);
             populateTable('retenciones', ['tercero', 'concepto', 'valor', 'estado', 'fuente']);
             updateSummary();
             renderOverallSummary();
@@ -1557,9 +1602,12 @@
                             finalContent = content || '';
                         }
                         
-                        if (index === 0) {
-                            cells += `<td class="${cellClass}">${newIndicator}${finalContent}</td>`;
-                        } else {
+                        if (index === 0 && type !== 'patrimonio') {
+                             cells += `<td class="${cellClass}">${newIndicator}${finalContent}</td>`;
+                        } else if (index === 2 && type === 'patrimonio') {
+                             cells += `<td class="${cellClass}">${newIndicator}${finalContent}</td>`;
+                        }
+                        else {
                             cells += `<td class="${cellClass}">${finalContent}</td>`;
                         }
                     });
@@ -1583,6 +1631,9 @@
             if (categorySelect) {
                 categorySelect.addEventListener('change', (event) => {
                     item.categoria = event.target.value;
+                     if (item.tipo === 'Pasivo') {
+                        item.categoria = 'Deudas';
+                    }
                     populateAllTables();
                 });
             }
@@ -1611,12 +1662,23 @@
         function renderFinancialStatements() {
             const container = document.getElementById('estados-financieros');
             container.innerHTML = '';
+
             const patrimonioConciliado = fichaContribuyente.patrimonio.filter(item => item.estado === 'Conciliado');
-            const activos = patrimonioConciliado.filter(item => item.tipo !== 'Pasivo');
+            const activos = patrimonioConciliado.filter(item => item.tipo === 'Activo');
             const pasivos = patrimonioConciliado.filter(item => item.tipo === 'Pasivo');
-            const totalActivos = activos.reduce((sum, item) => sum + item.valor, 0);
+
+            const activosByCategory = activos.reduce((acc, item) => {
+                const key = item.categoria || 'Otros activos';
+                if (!acc[key]) acc[key] = { items: [], total: 0 };
+                acc[key].items.push(item);
+                acc[key].total += item.valor;
+                return acc;
+            }, {});
+
+            const totalActivosBruto = activos.reduce((sum, item) => sum + item.valor, 0);
             const totalPasivos = pasivos.reduce((sum, item) => sum + item.valor, 0);
-            const patrimonioLiquido = totalActivos - totalPasivos;
+            const patrimonioLiquido = totalActivosBruto - totalPasivos;
+
             const ingresosConciliados = fichaContribuyente.ingresos.filter(item => item.estado === 'Conciliado');
             const totalIngresos = ingresosConciliados.reduce((sum, item) => sum + item.valor, 0);
             const ingresosByCategory = ingresosConciliados.reduce((acc, item) => {
@@ -1634,6 +1696,27 @@
                 return acc;
             }, {});
             const utilidad = totalIngresos - totalDeducciones;
+
+            const renderAssetCategory = (categoryName) => {
+                const categoryData = activosByCategory[categoryName];
+                if (!categoryData || categoryData.items.length === 0) return '';
+                
+                let itemsHtml = categoryData.items.map(item => `
+                    <div class="flex justify-between items-center text-gray-500 text-sm">
+                        <p class="truncate pr-4" title="${item.descripcion}">${item.descripcion}</p>
+                        <p class="font-mono whitespace-nowrap">${formatCurrency(item.valor)}</p>
+                    </div>
+                `).join('');
+
+                return `
+                    <div class="flex justify-between items-center font-semibold text-gray-700">
+                        <p>${categoryName}</p>
+                        <p class="font-mono">${formatCurrency(categoryData.total)}</p>
+                    </div>
+                    <div class="pl-4 space-y-1 border-l-2 ml-2 py-1">${itemsHtml}</div>
+                `;
+            };
+
             let html = `
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Estado de Resultado -->
@@ -1671,38 +1754,33 @@
                     <div class="p-6 border rounded-lg bg-white shadow-sm">
                         <h3 class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">Estado de Situación Financiera</h3>
                         <div class="space-y-3 text-base">
-                            <div class="flex justify-between items-center font-semibold">
-                                <p class="text-gray-700">Total Activos</p>
-                                <p class="font-mono text-gray-900">${formatCurrency(totalActivos)}</p>
+                            ${categorias.patrimonio.map(renderAssetCategory).join('')}
+                             <div class="flex justify-between items-center border-t pt-3 mt-3">
+                                <p class="font-bold text-gray-800">Total Patrimonio Bruto</p>
+                                <p class="font-mono font-bold text-lg text-blue-600">${formatCurrency(totalActivosBruto)}</p>
                             </div>
-                            <div class="pl-4 space-y-1 text-sm border-l-2 ml-2 py-1 max-h-48 overflow-y-auto">
-                                ${activos.map(item => `
-                                    <div class="flex justify-between items-center text-gray-500">
-                                        <p class="truncate pr-4" title="${item.descripcion}">${item.descripcion}</p><p class="font-mono whitespace-nowrap">${formatCurrency(item.valor)}</p>
-                                    </div>`).join('')}
+                             <div class="flex justify-between items-center font-semibold mt-4 text-gray-700">
+                                <p>(-) Deudas</p>
+                                <p class="font-mono">${formatCurrency(totalPasivos)}</p>
                             </div>
-                            <div class="flex justify-between items-center font-semibold mt-4">
-                                <p class="text-gray-700">(-) Total Pasivos</p>
-                                <p class="font-mono text-gray-900">${formatCurrency(totalPasivos)}</p>
-                            </div>
-                             <div class="pl-4 space-y-1 text-sm border-l-2 ml-2 py-1 max-h-48 overflow-y-auto">
+                            <div class="pl-4 space-y-1 text-sm border-l-2 ml-2 py-1">
                                 ${pasivos.map(item => `
                                     <div class="flex justify-between items-center text-gray-500">
                                         <p class="truncate pr-4" title="${item.descripcion}">${item.descripcion}</p><p class="font-mono whitespace-nowrap">${formatCurrency(item.valor)}</p>
                                     </div>`).join('')}
                             </div>
-                            <div class="flex justify-between items-center border-t pt-3 mt-3">
-                                <p class="font-bold text-gray-800">Patrimonio Líquido</p>
-                                <p class="font-mono font-bold text-xl text-blue-600">${formatCurrency(patrimonioLiquido)}</p>
+                            <div class="flex justify-between items-center border-t-2 border-double pt-3 mt-3">
+                                <p class="font-bold text-gray-800 text-lg">Total Patrimonio Líquido</p>
+                                <p class="font-mono font-bold text-xl text-blue-800">${formatCurrency(patrimonioLiquido)}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
-            if (totalActivos === 0 && totalPasivos === 0 && totalIngresos === 0 && totalDeducciones === 0) {
+            if (totalActivosBruto === 0 && totalPasivos === 0 && totalIngresos === 0 && totalDeducciones === 0) {
                 container.innerHTML = `<div class="text-center text-gray-500 py-10">
                     <h3 class="text-lg font-semibold">No hay datos conciliados.</h3>
-                    <p>Concilia ítems en las pestañas de Ingresos, Deducciones y Patrimonio para generar los estados financieros.</p>
+                    <p>Concilia ítems para generar los estados financieros.</p>
                 </div>`;
             } else {
                 container.innerHTML = html;
@@ -1859,3 +1937,4 @@
     </script>
 </body>
 </html>
+
