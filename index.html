@@ -1681,20 +1681,40 @@
 
             const ingresosConciliados = fichaContribuyente.ingresos.filter(item => item.estado === 'Conciliado');
             const totalIngresos = ingresosConciliados.reduce((sum, item) => sum + item.valor, 0);
-            const ingresosByCategory = ingresosConciliados.reduce((acc, item) => {
-                const key = item.categoria || 'Otro';
-                if (!acc[key]) acc[key] = 0;
-                acc[key] += item.valor;
+            
+            // New detailed grouping for Ingresos
+            const ingresosByCatAndConcept = ingresosConciliados.reduce((acc, item) => {
+                const categoria = item.categoria || 'Otro';
+                const concepto = item.concepto || 'Sin Concepto';
+                if (!acc[categoria]) {
+                    acc[categoria] = { total: 0, conceptos: {} };
+                }
+                acc[categoria].total += item.valor;
+                if (!acc[categoria].conceptos[concepto]) {
+                    acc[categoria].conceptos[concepto] = 0;
+                }
+                acc[categoria].conceptos[concepto] += item.valor;
                 return acc;
             }, {});
+
             const deduccionesConciliadas = fichaContribuyente.deducciones.filter(item => item.estado === 'Conciliado');
             const totalDeducciones = deduccionesConciliadas.reduce((sum, item) => sum + item.valor, 0);
-            const deduccionesByCategory = deduccionesConciliadas.reduce((acc, item) => {
-                const key = item.categoria || 'Otro';
-                if (!acc[key]) acc[key] = 0;
-                acc[key] += item.valor;
+
+            // New detailed grouping for Deducciones
+            const deduccionesByCatAndConcept = deduccionesConciliadas.reduce((acc, item) => {
+                const categoria = item.categoria || 'Otro';
+                const concepto = item.concepto || 'Sin Concepto';
+                if (!acc[categoria]) {
+                    acc[categoria] = { total: 0, conceptos: {} };
+                }
+                acc[categoria].total += item.valor;
+                if (!acc[categoria].conceptos[concepto]) {
+                    acc[categoria].conceptos[concepto] = 0;
+                }
+                acc[categoria].conceptos[concepto] += item.valor;
                 return acc;
             }, {});
+
             const utilidad = totalIngresos - totalDeducciones;
 
             const renderAssetCategory = (categoryName) => {
@@ -1727,21 +1747,45 @@
                                 <p class="text-gray-700">Ingresos</p>
                                 <p class="font-mono text-gray-900">${formatCurrency(totalIngresos)}</p>
                             </div>
-                            <div class="pl-4 space-y-1 text-sm border-l-2 ml-2 py-1">
-                                ${Object.keys(ingresosByCategory).sort().map(cat => `
-                                    <div class="flex justify-between items-center text-gray-500">
-                                        <p>${cat}</p><p class="font-mono">${formatCurrency(ingresosByCategory[cat])}</p>
-                                    </div>`).join('')}
+                            <div class="pl-4 space-y-2 text-sm border-l-2 ml-2 py-1">
+                                ${Object.keys(ingresosByCatAndConcept).sort().map(cat => `
+                                    <div class="pt-1">
+                                        <div class="flex justify-between items-center text-gray-700 font-semibold">
+                                            <p>${cat}</p>
+                                            <p class="font-mono">${formatCurrency(ingresosByCatAndConcept[cat].total)}</p>
+                                        </div>
+                                        <div class="pl-4">
+                                            ${Object.keys(ingresosByCatAndConcept[cat].conceptos).sort().map(concepto => `
+                                                <div class="flex justify-between items-center text-gray-500 text-xs">
+                                                    <p class="truncate pr-2">${concepto}</p>
+                                                    <p class="font-mono whitespace-nowrap">${formatCurrency(ingresosByCatAndConcept[cat].conceptos[concepto])}</p>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
                             </div>
                             <div class="flex justify-between items-center font-semibold mt-4">
                                 <p class="text-gray-700">(-) Costos y Deducciones</p>
                                 <p class="font-mono text-gray-900">${formatCurrency(totalDeducciones)}</p>
                             </div>
-                            <div class="pl-4 space-y-1 text-sm border-l-2 ml-2 py-1">
-                                ${Object.keys(deduccionesByCategory).sort().map(cat => `
-                                    <div class="flex justify-between items-center text-gray-500">
-                                        <p>${cat}</p><p class="font-mono">${formatCurrency(deduccionesByCategory[cat])}</p>
-                                    </div>`).join('')}
+                            <div class="pl-4 space-y-2 text-sm border-l-2 ml-2 py-1">
+                                ${Object.keys(deduccionesByCatAndConcept).sort().map(cat => `
+                                     <div class="pt-1">
+                                        <div class="flex justify-between items-center text-gray-700 font-semibold">
+                                            <p>${cat}</p>
+                                            <p class="font-mono">${formatCurrency(deduccionesByCatAndConcept[cat].total)}</p>
+                                        </div>
+                                        <div class="pl-4">
+                                            ${Object.keys(deduccionesByCatAndConcept[cat].conceptos).sort().map(concepto => `
+                                                <div class="flex justify-between items-center text-gray-500 text-xs">
+                                                    <p class="truncate pr-2">${concepto}</p>
+                                                    <p class="font-mono whitespace-nowrap">${formatCurrency(deduccionesByCatAndConcept[cat].conceptos[concepto])}</p>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
                             </div>
                             <div class="flex justify-between items-center border-t pt-3 mt-3">
                                 <p class="font-bold text-gray-800">Utilidad / Pérdida</p>
@@ -1937,4 +1981,5 @@
     </script>
 </body>
 </html>
+
 
