@@ -99,19 +99,21 @@
                         </div>
                     </div>
                      <div class="mt-4 md:mt-0">
-                        <div class="flex items-center">
-                            <label id="upload-label" for="file-upload" class="flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition-all duration-300">
+                        <div class="flex items-center flex-wrap gap-2">
+                            <label id="upload-label" for="file-upload" class="flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg cursor-pointer transition-all duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-cloud"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
-                                <span>Cargar Archivos</span>
+                                <span>Cargar</span>
                             </label>
                             <input id="file-upload" type="file" class="hidden" multiple accept=".csv,.xls,.xlsx,.pdf,.png,.jpg,.jpeg">
-                            <button id="export-button" class="hidden ml-4 flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition-all duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                <span>Exportar</span>
+                            
+                            <button id="export-gem-button" class="hidden flex items-center gap-2 bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg cursor-pointer transition-all duration-300">
+                                <span>Exportar para GEM</span>
                             </button>
-                            <button id="reset-button" class="hidden ml-4 flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition-all duration-300">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                                <span>Limpiar</span>
+                            <button id="export-button" class="hidden flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-lg cursor-pointer transition-all duration-300">
+                                <span>Exportar Estado</span>
+                            </button>
+                            <button id="reset-button" class="hidden flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg cursor-pointer transition-all duration-300">
+                               <span>Limpiar</span>
                             </button>
                         </div>
                         <p id="upload-text" class="text-xs text-gray-400 mt-2 text-center md:text-left">Sube reportes, PDFs, imágenes, etc.</p>
@@ -302,7 +304,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`;
-
             setupAuth();
         });
         
@@ -312,8 +313,6 @@
             const authError = document.getElementById('auth-error');
             
             // *** CAMBIA ESTA CONTRASEÑA ***
-            // Esta es la contraseña para acceder a la aplicación.
-            // Es simple, pero efectiva para uso personal.
             const ACCESS_PASSWORD = "pro-renta-2025"; 
 
             authForm.addEventListener('submit', (e) => {
@@ -356,7 +355,7 @@
                     } else {
                         showNotification('Por favor, ingresa una API Key válida.', 'error');
                     }
-                });
+                }, { once: true }); // Use { once: true } to prevent multiple listeners
             }
         }
 
@@ -416,6 +415,7 @@
                     updateUploadedFilesList();
                     document.getElementById('reset-button').classList.remove('hidden');
                     document.getElementById('export-button').classList.remove('hidden');
+                    document.getElementById('export-gem-button').classList.remove('hidden');
 
                     populateAllTables();
                     event.target.value = null; 
@@ -431,6 +431,7 @@
         function setupResetButton() {
             document.getElementById('reset-button').addEventListener('click', resetApplication);
             document.getElementById('export-button').addEventListener('click', exportToExcel);
+            document.getElementById('export-gem-button').addEventListener('click', exportForGem);
         }
 
         function setupTableControls() {
@@ -763,6 +764,7 @@
             document.getElementById('upload-text').textContent = 'Sube reportes, PDFs, imágenes, etc.';
             document.getElementById('reset-button').classList.add('hidden');
             document.getElementById('export-button').classList.add('hidden');
+            document.getElementById('export-gem-button').classList.add('hidden');
         }
 
         function showLoader(show, isInitial) {
@@ -813,11 +815,79 @@
             const ws_retenciones = XLSX.utils.json_to_sheet(fichaContribuyente.retenciones);
             XLSX.utils.book_append_sheet(wb, ws_retenciones, "Retenciones");
             
-            const fileName = `pro-renta_${(fichaContribuyente.nombre || 'export').replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.xlsx`;
+            const fileName = `estado-pro-renta_${(fichaContribuyente.nombre || 'export').replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.xlsx`;
             XLSX.writeFile(wb, fileName);
             
-            showNotification("Exportación completada.", "success");
+            showNotification("Exportación de estado completada.", "success");
         }
+        
+        function exportForGem() {
+            const consolidated = [];
+            
+            // Helper function to format description
+            const formatDesc = (item, defaultConcept) => {
+                if(item.descripcion) return item.descripcion;
+                if(item.tercero && item.concepto) return `${item.tercero} - ${item.concepto}`;
+                if(item.tercero) return item.tercero;
+                if(item.concepto) return item.concepto;
+                return defaultConcept || 'N/A';
+            }
+
+            // Ingresos
+            fichaContribuyente.ingresos.filter(i => i.estado === 'Conciliado').forEach(item => {
+                consolidated.push({
+                    'Tipo': 'Ingreso',
+                    'Categoria': item.categoria || 'N/A',
+                    'Descripcion': formatDesc(item, 'Ingreso General'),
+                    'Valor': item.valor
+                });
+            });
+
+            // Deducciones
+            fichaContribuyente.deducciones.filter(i => i.estado === 'Conciliado').forEach(item => {
+                consolidated.push({
+                    'Tipo': 'Deducción',
+                    'Categoria': item.categoria || 'N/A',
+                    'Descripcion': formatDesc(item, 'Costo/Gasto General'),
+                    'Valor': item.valor
+                });
+            });
+
+            // Patrimonio
+            fichaContribuyente.patrimonio.filter(i => i.estado === 'Conciliado').forEach(item => {
+                consolidated.push({
+                    'Tipo': item.tipo, // 'Activo' o 'Pasivo'
+                    'Categoria': item.tipo,
+                    'Descripcion': formatDesc(item),
+                    'Valor': item.valor
+                });
+            });
+
+            // Retenciones
+            fichaContribuyente.retenciones.filter(i => i.estado === 'Conciliado').forEach(item => {
+                consolidated.push({
+                    'Tipo': 'Retención a Favor',
+                    'Categoria': 'Retenciones',
+                    'Descripcion': formatDesc(item, 'Retención'),
+                    'Valor': item.valor
+                });
+            });
+
+            if (consolidated.length === 0) {
+                showNotification("No hay datos conciliados para exportar a GEM.", "warning");
+                return;
+            }
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(consolidated);
+            XLSX.utils.book_append_sheet(wb, ws, "Datos_Conciliados");
+
+            const fileName = `export_gem_${(fichaContribuyente.nombre || 'export').replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.xlsx`;
+            XLSX.writeFile(wb, fileName);
+            
+            showNotification("Exportación para GEM completada.", "success");
+        }
+
 
         function importFromExcelState(workbook) {
             resetApplication();
@@ -857,6 +927,7 @@
                 }
                 document.getElementById('reset-button').classList.remove('hidden');
                 document.getElementById('export-button').classList.remove('hidden');
+                document.getElementById('export-gem-button').classList.remove('hidden');
             }
             updateContribuyenteInfoUI();
             populateAllTables();
@@ -872,15 +943,12 @@
                     let success = false;
 
                     try {
-                        // Primero, separamos la lógica por tipo de archivo para evitar errores.
                         if (file.type.startsWith('image/')) {
-                            // Ruta para imágenes
                             await processImageWithAI(file, fileName);
                             success = true;
                             if (success) fichaContribuyente.documentos.push(doc);
                             resolve();
                         } else { 
-                            // Ruta para PDF y Excel, que usan ArrayBuffer
                             const reader = new FileReader();
                             reader.onload = async (e) => {
                                 try {
@@ -888,19 +956,18 @@
                                     if (file.type === 'application/pdf') {
                                         if (!navigator.onLine) {
                                             showNotification('Se requiere conexión a internet para procesar archivos PDF con IA.', 'error');
-                                            return; // Salida temprana para este archivo
+                                            return;
                                         }
                                         const pdfData = new Uint8Array(buffer);
                                         await processPdfWithAI(pdfData, fileName);
                                         success = true;
-                                    } else { // Se asume que es tipo Excel
+                                    } else { 
                                         const data = new Uint8Array(buffer);
                                         const workbook = XLSX.read(data, { type: 'array' });
 
                                         if (workbook.SheetNames.includes('Metadata') && workbook.SheetNames.includes('Ingresos')) {
                                             importFromExcelState(workbook);
                                             showNotification(`Archivo de estado "${fileName}" importado.`, "success");
-                                            // No se añade el archivo de estado a la lista de documentos.
                                         } else {
                                             const firstSheetName = workbook.SheetNames[0];
                                             const worksheet = workbook.Sheets[firstSheetName];
@@ -926,7 +993,7 @@
                             };
                             reader.readAsArrayBuffer(file);
                         }
-                    } catch (error) { // Esto captura errores de processImageWithAI
+                    } catch (error) { 
                         console.error("Error al procesar el archivo de imagen:", fileName, error);
                         showNotification(`Error al procesar la imagen: ${fileName}.`, 'error');
                         resolve();
