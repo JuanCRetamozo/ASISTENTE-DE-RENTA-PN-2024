@@ -254,6 +254,28 @@
         </div>
     </div>
 
+     <!-- Modal for API Key -->
+    <div id="api-key-modal" class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden z-[150]">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        <div class="modal-content bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 transform scale-95">
+            <div class="p-6">
+                <div class="pb-3">
+                    <p class="text-2xl font-bold">Configuración Requerida</p>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Para usar las funciones de IA, necesitas una API Key de Google AI Studio. Es gratis y fácil de obtener.</p>
+                <div>
+                    <label for="api-key-input" class="block text-sm font-medium text-gray-700">Tu API Key de Gemini</label>
+                    <input type="password" id="api-key-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Pega tu clave aquí">
+                    <p class="text-xs text-gray-500 mt-1">La clave se guardará de forma segura en tu navegador.</p>
+                </div>
+                 <a href="https://makersuite.google.com/app/apikey" target="_blank" class="text-blue-500 hover:underline text-sm mt-2 inline-block">¿No tienes una clave? Obtenla aquí.</a>
+                <div class="flex justify-end pt-6 mt-4 border-t">
+                    <button id="api-key-save" class="px-4 bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-600">Guardar Clave</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Librerías JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
@@ -282,15 +304,6 @@
             pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`;
 
             setupAuth();
-            
-            // Estas funciones se ejecutarán después de una autenticación exitosa
-            // enterEstadoCero();
-            // setupTabs();
-            // setupFileInput();
-            // setupResetButton();
-            // setupTableControls();
-            // setupModal();
-            // setupAiReviewModal();
         });
         
         function setupAuth() {
@@ -324,6 +337,27 @@
             setupTableControls();
             setupModal();
             setupAiReviewModal();
+            checkAndRequestApiKey();
+        }
+
+        function checkAndRequestApiKey() {
+            const apiKey = localStorage.getItem('geminiApiKey');
+            if (!apiKey) {
+                const modal = document.getElementById('api-key-modal');
+                modal.classList.remove('hidden');
+                modal.querySelector('.modal-content').classList.remove('scale-95');
+
+                document.getElementById('api-key-save').addEventListener('click', () => {
+                    const keyInput = document.getElementById('api-key-input');
+                    if (keyInput.value && keyInput.value.trim() !== '') {
+                        localStorage.setItem('geminiApiKey', keyInput.value.trim());
+                        modal.classList.add('hidden');
+                        showNotification('API Key guardada correctamente.', 'success');
+                    } else {
+                        showNotification('Por favor, ingresa una API Key válida.', 'error');
+                    }
+                });
+            }
         }
 
         function setupTabs() {
@@ -614,7 +648,7 @@
                     `;
                     break;
                 case 'deducciones':
-                       formHtml = `
+                      formHtml = `
                         <div><label class="block text-sm font-medium text-gray-700">Tercero</label><input type="text" id="manual-tercero" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                         <div><label class="block text-sm font-medium text-gray-700">Concepto</label><input type="text" id="manual-concepto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
                         <div><label class="block text-sm font-medium text-gray-700">Base Cálculo (Opcional)</label><input type="number" id="manual-base" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></div>
@@ -673,8 +707,8 @@
                     newItem.descripcion = document.getElementById('manual-descripcion').value;
                     break;
                 case 'retenciones':
-                       newItem.tercero = document.getElementById('manual-tercero').value;
-                       newItem.concepto = document.getElementById('manual-concepto').value;
+                      newItem.tercero = document.getElementById('manual-tercero').value;
+                      newItem.concepto = document.getElementById('manual-concepto').value;
                     break;
             }
             fichaContribuyente[type].push(newItem);
@@ -940,6 +974,13 @@
         }
         
         async function callGeminiForExtraction(input) {
+            const apiKey = localStorage.getItem('geminiApiKey');
+            if (!apiKey) {
+                showNotification("API Key no encontrada. Por favor, configúrala para usar la IA.", "error");
+                checkAndRequestApiKey();
+                return null;
+            }
+
              const systemPrompt = `Eres un asistente contable experto en Colombia. Analiza el texto o la imagen de un documento financiero. Puede ser un certificado tributario bancario o una planilla de pago de seguridad social (PILA). Extrae los siguientes valores numéricos. Si un valor no se encuentra, omite la clave o déjalo en 0. El resultado DEBE ser un objeto JSON válido.
                  - contribuyente.nombre: Nombre de la persona.
                  - contribuyente.nit: NIT o número de identificación.
@@ -951,7 +992,6 @@
                  - aporteSalud: El valor total del aporte a salud. Búscalo como "Salud".
                  - aportePension: El valor total del aporte a pensión. Búscalo como "Pensión".`;
 
-            const apiKey = "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             let parts;
@@ -1449,6 +1489,7 @@
                         } else {
                             finalContent = content || '';
                         }
+                        
                         if (index === 0) {
                             cells += `<td class="${cellClass}">${newIndicator}${finalContent}</td>`;
                         } else {
@@ -1457,6 +1498,7 @@
                     });
                     row.innerHTML = cells;
                     tbody.appendChild(row);
+    
                     addSelectListeners(row, item);
                 });
             }
@@ -1650,7 +1692,7 @@
                 container.innerHTML += deduccionesHtml;
             }
             const patrimonioConciliado = fichaContribuyente.patrimonio.filter(item => item.estado === 'Conciliado');
-               if (patrimonioConciliado.length > 0) {
+              if (patrimonioConciliado.length > 0) {
                 const totalActivos = patrimonioConciliado.filter(item => item.tipo !== 'Pasivo').reduce((sum, item) => sum + item.valor, 0);
                 const totalPasivos = patrimonioConciliado.filter(item => item.tipo === 'Pasivo').reduce((sum, item) => sum + item.valor, 0);
                 const patrimonioLiquido = totalActivos - totalPasivos;
@@ -1665,7 +1707,7 @@
                 container.innerHTML += patrimonioHtml;
             }
             const retencionesConciliadas = fichaContribuyente.retenciones.filter(item => item.estado === 'Conciliado');
-               if (retencionesConciliadas.length > 0) {
+              if (retencionesConciliadas.length > 0) {
                 const totalRetenciones = retencionesConciliadas.reduce((sum, item) => sum + item.valor, 0);
                 let retencionesHtml = `<div class="p-4 border rounded-lg">
                     <div class="flex justify-between items-baseline">
